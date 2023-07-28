@@ -1,6 +1,7 @@
 package com.kafein.dayOffScheduleBackend.api.controllers;
 
 import com.kafein.dayOffScheduleBackend.business.abstracts.EmployeeService;
+import com.kafein.dayOffScheduleBackend.dto.EmployeeDto;
 import com.kafein.dayOffScheduleBackend.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,19 @@ public class EmployeeController {
             return  this.employeeService.getAll();
         }catch (Exception e){
             return null;
+        }
+    }
+
+    @PutMapping("/remainingDayOff/{employeeId}")
+    private ResponseEntity<String> updateRemainingDayOff(@PathVariable int employeeId, @RequestBody EmployeeDto employeeDto){
+        try{
+            System.out.println("employee used day off : "+employeeDto.getUsedDayOff());
+
+            this.employeeService.updateRemainingDayOff( Long.valueOf(employeeId),employeeDto.getUsedDayOff());
+
+            return new ResponseEntity<>("Employee remining day off updated successfully .", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Employee remining day off didnt update", HttpStatus.EXPECTATION_FAILED);
         }
     }
 

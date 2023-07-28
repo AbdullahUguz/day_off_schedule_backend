@@ -20,8 +20,10 @@ public class Employee {
     @Column(unique = true,nullable = false)
     private String email;
 
-    private int dayOff=20;
+    private String department;
 
-    private int remainingDayOff;
+    private Integer dayOff=20;
+
+    private Integer remainingDayOff=20;
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeManager implements EmployeeService {
@@ -21,6 +22,20 @@ public class EmployeeManager implements EmployeeService {
     @Override
     public void add(Employee employee) {
         this.employeeRepository.save(employee);
+    }
+
+    @Override
+    public void updateRemainingDayOff(long employeeId, int usedDayOff) {
+
+        try {
+            Optional<Employee> employee= this.employeeRepository.findById(employeeId);
+            employee.get().setRemainingDayOff(employee.get().getRemainingDayOff() - usedDayOff);
+
+            this.employeeRepository.save(employee.get());
+
+        }catch (Exception e){
+            new Throwable("update remining dayy off execeptions");
+        }
     }
 
     @Override

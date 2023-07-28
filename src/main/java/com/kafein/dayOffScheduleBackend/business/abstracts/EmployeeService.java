@@ -7,5 +7,7 @@ import java.util.List;
 public interface EmployeeService {
 
     void add(Employee employee);
+    void updateRemainingDayOff(long employeeId, int usedDayOff);
     List<Employee> getAll();
+
 }
