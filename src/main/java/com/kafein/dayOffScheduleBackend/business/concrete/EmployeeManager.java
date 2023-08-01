@@ -34,12 +34,28 @@ public class EmployeeManager implements EmployeeService {
             this.employeeRepository.save(employee.get());
 
         }catch (Exception e){
-            new Throwable("update remining dayy off execeptions");
+            new Throwable("update remining dayy off exceptions");
         }
     }
 
     @Override
     public List<Employee> getAll() {
         return this.employeeRepository.findAllByOrderByIdAsc();
+    }
+
+    @Override
+    public boolean isEmailExist(String email) {
+        try{
+            Employee employee = this.employeeRepository.findByEmail(email);
+            if(employee == null){
+                return false;
+            }else {
+                return true;
+            }
+
+        }catch (Exception e){
+            new Throwable("email control exception");
+        }
+        return false;
     }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee,Long> {
 
     List<Employee> findAllByOrderByIdAsc();
+    Employee findByEmail(String email);
 }

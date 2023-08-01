@@ -1,6 +1,7 @@
 package com.kafein.dayOffScheduleBackend.api.controllers;
 
 import com.kafein.dayOffScheduleBackend.business.abstracts.EmployeeService;
+import com.kafein.dayOffScheduleBackend.business.concrete.EmployeeManager;
 import com.kafein.dayOffScheduleBackend.dto.EmployeeDto;
 import com.kafein.dayOffScheduleBackend.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +44,25 @@ public class EmployeeController {
     @PutMapping("/remainingDayOff/{employeeId}")
     private ResponseEntity<String> updateRemainingDayOff(@PathVariable int employeeId, @RequestBody EmployeeDto employeeDto){
         try{
-            System.out.println("employee used day off : "+employeeDto.getUsedDayOff());
 
             this.employeeService.updateRemainingDayOff( Long.valueOf(employeeId),employeeDto.getUsedDayOff());
 
             return new ResponseEntity<>("Employee remining day off updated successfully .", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Employee remining day off didnt update", HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @PostMapping("/isEmailExist")
+    private ResponseEntity<String> isEmailExist(@RequestBody EmployeeDto employeeDto){
+        try{
+            if(this.employeeService.isEmailExist(employeeDto.getEmail())){
+                return new ResponseEntity<>("true", HttpStatus.OK); // email exist
+            }else{
+                return new ResponseEntity<>("false", HttpStatus.OK); // email didnt exist
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>("Email control exceptions", HttpStatus.EXPECTATION_FAILED);
         }
     }
 

@@ -6,4 +6,5 @@ import lombok.Data;
 public class EmployeeDto {
 
     private int usedDayOff;
+    private String email;
 }
