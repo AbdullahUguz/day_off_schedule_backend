@@ -54,7 +54,7 @@ public class EmployeeManager implements EmployeeService {
             }
 
         }catch (Exception e){
-            new Throwable("email control exception");
+            new Throwable("email control exception : "+e);
         }
         return false;
     }
@@ -62,5 +62,23 @@ public class EmployeeManager implements EmployeeService {
     @Override
     public void deleteEmployeeById(long employeeId) {
         this.employeeRepository.deleteById(employeeId);
+    }
+
+    @Override
+    public void updateEmployee(long employeeId,Employee employee) {
+        try {
+            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
+
+            employeeCntrl.setName(employee.getName());
+            employeeCntrl.setLastName(employee.getLastName());
+            employeeCntrl.setDepartment(employee.getDepartment());
+            employeeCntrl.setEmail(employee.getEmail());
+            employeeCntrl.setDayOff(employee.getDayOff());
+//            employeeCntrl.setRemainingDayOff(employee.getRemainingDayOff());
+
+            this.employeeRepository.save(employeeCntrl);
+        }catch (Exception e){
+            new Throwable("employee update exception : "+e);
+        }
     }
 }

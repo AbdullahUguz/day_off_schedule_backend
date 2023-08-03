@@ -11,4 +11,5 @@ public interface EmployeeService {
     List<Employee> getAll();
     boolean isEmailExist(String email);
     void deleteEmployeeById(long employeeId);
+    void updateEmployee(long emlpoyeeId,Employee employee);
 }

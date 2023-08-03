@@ -49,7 +49,7 @@ public class EmployeeController {
 
             return new ResponseEntity<>("Employee remining day off updated successfully .", HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("Employee remining day off didnt update", HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("Employee remining day off didnt update: "+e, HttpStatus.EXPECTATION_FAILED);
         }
     }
 
@@ -62,7 +62,7 @@ public class EmployeeController {
                 return new ResponseEntity<>("false", HttpStatus.OK); // email didnt exist
             }
         }catch (Exception e){
-            return new ResponseEntity<>("Email control exceptions", HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("Email control exception: "+e, HttpStatus.EXPECTATION_FAILED);
         }
     }
 
@@ -73,6 +73,16 @@ public class EmployeeController {
             return new ResponseEntity<>("Employee deleted",HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>("Employee delete exception",HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @PutMapping("/update/{employeeId}")
+    private ResponseEntity<String> update(@PathVariable int employeeId ,@RequestBody Employee employee){
+        try {
+            this.employeeService.updateEmployee(Long.valueOf(employeeId),employee);
+            return new ResponseEntity<>("Employee updated",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Employee update exception: "+e,HttpStatus.EXPECTATION_FAILED);
         }
     }
 }
