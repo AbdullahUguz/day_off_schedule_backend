@@ -58,4 +58,9 @@ public class EmployeeManager implements EmployeeService {
         }
         return false;
     }
+
+    @Override
+    public void deleteEmployeeById(long employeeId) {
+        this.employeeRepository.deleteById(employeeId);
+    }
 }

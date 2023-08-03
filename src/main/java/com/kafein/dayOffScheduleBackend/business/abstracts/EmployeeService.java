@@ -10,5 +10,5 @@ public interface EmployeeService {
     void updateRemainingDayOff(long employeeId, int usedDayOff);
     List<Employee> getAll();
     boolean isEmailExist(String email);
-
+    void deleteEmployeeById(long employeeId);
 }

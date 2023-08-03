@@ -66,4 +66,13 @@ public class EmployeeController {
         }
     }
 
+    @DeleteMapping("/delete/{employeeId}")
+    private ResponseEntity<String> delete(@PathVariable int employeeId){
+        try{
+            this.employeeService.deleteEmployeeById(Long.valueOf(employeeId));
+            return new ResponseEntity<>("Employee deleted",HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>("Employee delete exception",HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 }
