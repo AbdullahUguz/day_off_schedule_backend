@@ -74,11 +74,23 @@ public class EmployeeManager implements EmployeeService {
             employeeCntrl.setDepartment(employee.getDepartment());
             employeeCntrl.setEmail(employee.getEmail());
             employeeCntrl.setDayOff(employee.getDayOff());
-//            employeeCntrl.setRemainingDayOff(employee.getRemainingDayOff());
 
             this.employeeRepository.save(employeeCntrl);
         }catch (Exception e){
             new Throwable("employee update exception : "+e);
+        }
+    }
+
+    @Override
+    public void resetResetRemainingDayOff(long employeeId) {
+        try {
+
+            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
+            employeeCntrl.setRemainingDayOff(employeeCntrl.getDayOff());
+            this.employeeRepository.save(employeeCntrl);
+
+        }catch (Exception e){
+            new Throwable("reset remaining day off exception : "+e);
         }
     }
 }

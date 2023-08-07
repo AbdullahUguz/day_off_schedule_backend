@@ -85,4 +85,15 @@ public class EmployeeController {
             return new ResponseEntity<>("Employee update exception: "+e,HttpStatus.EXPECTATION_FAILED);
         }
     }
+
+    @PostMapping("/resetRemainingDayOff/{employeeId}")
+    private ResponseEntity<String> resetRemaningDayOff(@PathVariable int employeeId){
+        try{
+            this.employeeService.resetResetRemainingDayOff(Long.valueOf(employeeId));
+
+            return new ResponseEntity<>("Employee updated",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Employee update exception: "+e,HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 }

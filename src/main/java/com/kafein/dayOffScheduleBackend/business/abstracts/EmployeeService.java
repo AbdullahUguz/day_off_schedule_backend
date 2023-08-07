@@ -12,4 +12,5 @@ public interface EmployeeService {
     boolean isEmailExist(String email);
     void deleteEmployeeById(long employeeId);
     void updateEmployee(long emlpoyeeId,Employee employee);
+    void resetResetRemainingDayOff(long employeeId);
 }
