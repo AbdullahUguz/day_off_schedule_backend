@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    void add(Employee employee);
-    void updateRemainingDayOff(long employeeId, int usedDayOff);
+    Employee create(Employee employee);
+//    void updateRemainingDayOff(long employeeId, int usedDayOff);
     List<Employee> getAll();
     boolean isEmailExist(String email);
     void deleteEmployeeById(long employeeId);
-    void updateEmployee(long emlpoyeeId,Employee employee);
-    void resetResetRemainingDayOff(long employeeId);
+//    void updateEmployee(long emlpoyeeId,Employee employee);
+//    void resetResetRemainingDayOff(long employeeId);
 }

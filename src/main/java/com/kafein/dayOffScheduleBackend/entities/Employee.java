@@ -17,13 +17,17 @@ public class Employee {
 
     private String lastName;
 
+    private boolean isVisible;
+
     @Column(unique = true,nullable = false)
     private String email;
 
-    private String department;
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
-    private Integer dayOff=20;
-
-    private Integer remainingDayOff=20;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "days_off_id")
+    private DayOff dayOff;
 
 }

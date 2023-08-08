@@ -20,23 +20,23 @@ public class EmployeeManager implements EmployeeService {
     }
 
     @Override
-    public void add(Employee employee) {
-        this.employeeRepository.save(employee);
+    public Employee create(Employee employee) {
+        return this.employeeRepository.save(employee);
     }
 
-    @Override
-    public void updateRemainingDayOff(long employeeId, int usedDayOff) {
-
-        try {
-            Optional<Employee> employee= this.employeeRepository.findById(employeeId);
-            employee.get().setRemainingDayOff(employee.get().getRemainingDayOff() - usedDayOff);
-
-            this.employeeRepository.save(employee.get());
-
-        }catch (Exception e){
-            new Throwable("update remining dayy off exceptions");
-        }
-    }
+//    @Override
+//    public void updateRemainingDayOff(long employeeId, int usedDayOff) {
+//
+//        try {
+//            Optional<Employee> employee= this.employeeRepository.findById(employeeId);
+//            employee.get().setRemainingDayOff(employee.get().getRemainingDayOff() - usedDayOff);
+//
+//            this.employeeRepository.save(employee.get());
+//
+//        }catch (Exception e){
+//            new Throwable("update remining dayy off exceptions");
+//        }
+//    }
 
     @Override
     public List<Employee> getAll() {
@@ -64,33 +64,33 @@ public class EmployeeManager implements EmployeeService {
         this.employeeRepository.deleteById(employeeId);
     }
 
-    @Override
-    public void updateEmployee(long employeeId,Employee employee) {
-        try {
-            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
-
-            employeeCntrl.setName(employee.getName());
-            employeeCntrl.setLastName(employee.getLastName());
-            employeeCntrl.setDepartment(employee.getDepartment());
-            employeeCntrl.setEmail(employee.getEmail());
-            employeeCntrl.setDayOff(employee.getDayOff());
-
-            this.employeeRepository.save(employeeCntrl);
-        }catch (Exception e){
-            new Throwable("employee update exception : "+e);
-        }
-    }
-
-    @Override
-    public void resetResetRemainingDayOff(long employeeId) {
-        try {
-
-            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
-            employeeCntrl.setRemainingDayOff(employeeCntrl.getDayOff());
-            this.employeeRepository.save(employeeCntrl);
-
-        }catch (Exception e){
-            new Throwable("reset remaining day off exception : "+e);
-        }
-    }
+//    @Override
+//    public void updateEmployee(long employeeId,Employee employee) {
+//        try {
+//            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
+//
+//            employeeCntrl.setName(employee.getName());
+//            employeeCntrl.setLastName(employee.getLastName());
+//            employeeCntrl.setDepartment(employee.getDepartment());
+//            employeeCntrl.setEmail(employee.getEmail());
+//            employeeCntrl.setDayOff(employee.getDayOff());
+//
+//            this.employeeRepository.save(employeeCntrl);
+//        }catch (Exception e){
+//            new Throwable("employee update exception : "+e);
+//        }
+//    }
+//
+//    @Override
+//    public void resetResetRemainingDayOff(long employeeId) {
+//        try {
+//
+//            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
+//            employeeCntrl.setRemainingDayOff(employeeCntrl.getDayOff());
+//            this.employeeRepository.save(employeeCntrl);
+//
+//        }catch (Exception e){
+//            new Throwable("reset remaining day off exception : "+e);
+//        }
+//    }
 }
