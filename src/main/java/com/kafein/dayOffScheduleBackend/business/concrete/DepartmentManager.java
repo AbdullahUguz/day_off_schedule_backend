@@ -6,6 +6,8 @@ import com.kafein.dayOffScheduleBackend.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class DepartmentManager implements DepartmentService {
@@ -25,5 +27,10 @@ public class DepartmentManager implements DepartmentService {
     @Override
     public Department getById(long departmentId) {
         return this.departmentRepository.findById(departmentId).get();
+    }
+
+    @Override
+    public List<Department> getAll() {
+        return this.departmentRepository.findAll();
     }
 }

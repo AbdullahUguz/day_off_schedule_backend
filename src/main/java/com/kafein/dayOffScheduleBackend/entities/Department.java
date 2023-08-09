@@ -1,5 +1,6 @@
 package com.kafein.dayOffScheduleBackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +21,6 @@ public class Department {
     private Long id;
 
     @Column(nullable = false)
-    private String department;
+    private String name;
 
-    @OneToMany(mappedBy = "department")
-    private List<Employee> employees;
 }
