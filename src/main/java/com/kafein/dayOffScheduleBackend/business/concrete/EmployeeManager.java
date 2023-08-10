@@ -40,7 +40,7 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public List<Employee> getAll() {
-        return this.employeeRepository.findAllByOrderByIdAsc();
+        return this.employeeRepository.findAll();
     }
 
     @Override

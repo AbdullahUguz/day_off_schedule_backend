@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/employees")
@@ -29,10 +31,10 @@ public class EmployeeController {
     @PostMapping("/create")
     private ResponseEntity<String> create(@RequestBody EmployeeRequestDto employeeRequestDto){
         try{
-            System.out.println("geldi");
             Employee newEmployee = employeeRequestDto.getEmployee();
+            newEmployee.setVisible(true);
             Department department = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
-
+            System.out.println("sda : "+employeeRequestDto.getDepartmentId()+"  dasa "+department.getName());
             newEmployee.setDayOff(new DayOff());
             newEmployee.setDepartment(department);
 
@@ -51,14 +53,14 @@ public class EmployeeController {
         }
     }
 
-//    @GetMapping("/getAll")
-//    private List<Employee> getAll(){
-//        try{
-//            return  this.employeeService.getAll();
-//        }catch (Exception e){
-//            return null;
-//        }
-//    }
+    @GetMapping("/getAll")
+    private List<Employee> getAll(){
+        try{
+            return  this.employeeService.getAll();
+        }catch (Exception e){
+            return null;
+        }
+    }
 
 //    @PutMapping("/remainingDayOff/{employeeId}")
 //    private ResponseEntity<String> updateRemainingDayOff(@PathVariable int employeeId, @RequestBody EmployeeDto employeeDto){
