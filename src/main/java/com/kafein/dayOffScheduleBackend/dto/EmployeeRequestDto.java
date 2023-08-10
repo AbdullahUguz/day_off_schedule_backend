@@ -7,6 +7,5 @@ import lombok.Data;
 @Data
 public class EmployeeRequestDto {
     private Employee employee;
-    private DayOff dayOff;
     private Integer departmentId;
 }

@@ -6,6 +6,7 @@ import com.kafein.dayOffScheduleBackend.dto.EmployeeRequestDto;
 import com.kafein.dayOffScheduleBackend.entities.DayOff;
 import com.kafein.dayOffScheduleBackend.entities.Department;
 import com.kafein.dayOffScheduleBackend.entities.Employee;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,17 +29,25 @@ public class EmployeeController {
     @PostMapping("/create")
     private ResponseEntity<String> create(@RequestBody EmployeeRequestDto employeeRequestDto){
         try{
+            System.out.println("geldi");
             Employee newEmployee = employeeRequestDto.getEmployee();
-            DayOff newDayOff = employeeRequestDto.getDayOff();
             Department department = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
-            newEmployee.setDayOff(newDayOff);
+
+            newEmployee.setDayOff(new DayOff());
             newEmployee.setDepartment(department);
 
-            Employee savedEmployee = this.employeeService.create(newEmployee);
+            this.employeeService.create(newEmployee);
 
             return new ResponseEntity<>("Employee created",HttpStatus.CREATED);
         }catch (Exception e){
-            return new ResponseEntity<>("Employee did not create", HttpStatus.EXPECTATION_FAILED);
+            String errorMessage;
+            if (e.getMessage().contains("email")) {
+                errorMessage = "Email already exists";
+                return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+            } else {
+                errorMessage = "An error occurred while creating employee";
+                return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
