@@ -28,7 +28,7 @@ public class Employee {
     private Department department;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "days_off_id")
+    @JoinColumn(name = "day_off_id")
     private DayOff dayOff;
 
 }

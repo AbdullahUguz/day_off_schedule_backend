@@ -2,13 +2,16 @@ package com.kafein.dayOffScheduleBackend.api.controllers;
 
 import com.kafein.dayOffScheduleBackend.business.abstracts.DayOffService;
 import com.kafein.dayOffScheduleBackend.entities.DayOff;
+import com.kafein.dayOffScheduleBackend.entities.DayOffDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/days_off")
+@RequestMapping("/daysOff")
 @CrossOrigin(origins="http://localhost:3000")
 public class DayOffController {
 
@@ -19,14 +22,24 @@ public class DayOffController {
         this.dayOffService=dayOffService;
     }
 
-//    @PostMapping("/create")
-//    private ResponseEntity<String> add(@RequestBody DayOff dayOff){
+
+//    @GetMapping("/getDayOff/{employeeId}")
+//    private List<DayOff> getAll(@PathVariable int employeeId){
 //        try{
-//            this.dayOffService.create(dayOff);
-//            return new ResponseEntity<>("Day off successfully  added.", HttpStatus.CREATED);
+//            System.out.println("employeeId : "+employeeId);
+//            return  this.dayOffService.getDaysOffByEmployeeId(Long.valueOf(employeeId));
 //        }catch (Exception e){
-//            return new ResponseEntity<>("Day off did not add.", HttpStatus.EXPECTATION_FAILED);
+//            return null;
 //        }
 //    }
+
+    @PostMapping("/addDayOffDetail/{dayOffId}")
+    private ResponseEntity<DayOff> create(@PathVariable int dayOffId,@RequestBody DayOffDetail dayOffDetail){
+        try{
+            return new ResponseEntity<>(this.dayOffService.addDayOfDetail(Long.valueOf(dayOffId),dayOffDetail), HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 
 }

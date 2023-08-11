@@ -34,7 +34,6 @@ public class EmployeeController {
             Employee newEmployee = employeeRequestDto.getEmployee();
             newEmployee.setVisible(true);
             Department department = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
-            System.out.println("sda : "+employeeRequestDto.getDepartmentId()+"  dasa "+department.getName());
             newEmployee.setDayOff(new DayOff());
             newEmployee.setDepartment(department);
 
@@ -61,6 +60,7 @@ public class EmployeeController {
             return null;
         }
     }
+
 
 //    @PutMapping("/remainingDayOff/{employeeId}")
 //    private ResponseEntity<String> updateRemainingDayOff(@PathVariable int employeeId, @RequestBody EmployeeDto employeeDto){

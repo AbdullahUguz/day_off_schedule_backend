@@ -1,37 +1,36 @@
 package com.kafein.dayOffScheduleBackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "days_off")
+@Table(name = "day_off_details")
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class DayOff {
-
+public class DayOffDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer dayOff;
+    private Date startDate;
 
-    private Float remainingDayOff;
+    private Date endDate;
 
-//    @OneToOne(mappedBy = "dayOff")
-//    private Employee employee;
+    private String explanation;
 
-    @OneToMany(mappedBy = "dayOff",cascade = CascadeType.ALL)
-    private List<DayOffDetail> dayOffDetailList = new ArrayList<>();
+    private Float usedDayOff;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "day_off_id")
+    private DayOff dayOff;
 }

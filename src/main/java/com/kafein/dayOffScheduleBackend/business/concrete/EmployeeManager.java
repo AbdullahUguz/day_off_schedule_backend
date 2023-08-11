@@ -20,8 +20,8 @@ public class EmployeeManager implements EmployeeService {
     }
 
     @Override
-    public Employee create(Employee employee) {
-        return this.employeeRepository.save(employee);
+    public void create(Employee employee) {
+         this.employeeRepository.save(employee);
     }
 
 //    @Override
@@ -63,6 +63,8 @@ public class EmployeeManager implements EmployeeService {
     public void deleteEmployeeById(long employeeId) {
         this.employeeRepository.deleteById(employeeId);
     }
+
+
 
 //    @Override
 //    public void updateEmployee(long employeeId,Employee employee) {
