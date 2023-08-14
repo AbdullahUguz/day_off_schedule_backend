@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Data
@@ -19,7 +20,7 @@ public class Employee {
 
     private String lastName;
 
-    private boolean isVisible;
+    private Boolean isVisible=true;
 
     @Column(unique = true,nullable = false)
     private String email;

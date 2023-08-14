@@ -6,7 +6,6 @@ import com.kafein.dayOffScheduleBackend.dto.EmployeeRequestDto;
 import com.kafein.dayOffScheduleBackend.entities.DayOff;
 import com.kafein.dayOffScheduleBackend.entities.Department;
 import com.kafein.dayOffScheduleBackend.entities.Employee;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,6 @@ public class EmployeeController {
             Department department = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
             Employee newEmployee = employeeRequestDto.getEmployee();
 
-            newEmployee.setVisible(true);
             dayOff.setInitialDayOff(20);
             dayOff.setRemainingDayOff(20f);
             newEmployee.setDayOff(dayOff);
@@ -47,7 +45,7 @@ public class EmployeeController {
             return new ResponseEntity<>("Employee created",HttpStatus.CREATED);
         }catch (Exception e){
             String errorMessage;
-            if (e.getMessage().contains("email")) {
+            if (e.getMessage().contains("email") && e.getMessage().contains("already exists")) {
                 errorMessage = "Email already exists";
                 return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
             } else {
@@ -65,7 +63,7 @@ public class EmployeeController {
             return new ResponseEntity<>("Employee updated",HttpStatus.OK);
         }catch (Exception e){
             String errorMessage;
-            if (e.getMessage().contains("email")) {
+            if (e.getMessage().contains("email") && e.getMessage().contains("already exists")) {
                 errorMessage = "Email already exists";
                 return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
             } else {
@@ -84,6 +82,17 @@ public class EmployeeController {
         }
     }
 
+    @DeleteMapping("/delete/{employeeId}")
+    private ResponseEntity<String> delete(@PathVariable int employeeId){
+        try{
+            this.employeeService.deleteEmployeeById(Long.valueOf(employeeId));
+            return new ResponseEntity<>("Employee deleted",HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>("Employee delete exception",HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+
 
 //    @PutMapping("/remainingDayOff/{employeeId}")
 //    private ResponseEntity<String> updateRemainingDayOff(@PathVariable int employeeId, @RequestBody EmployeeDto employeeDto){
@@ -98,16 +107,7 @@ public class EmployeeController {
 //    }
 
 
-//    @DeleteMapping("/delete/{employeeId}")
-//    private ResponseEntity<String> delete(@PathVariable int employeeId){
-//        try{
-//            this.employeeService.deleteEmployeeById(Long.valueOf(employeeId));
-//            return new ResponseEntity<>("Employee deleted",HttpStatus.OK);
-//        }catch(Exception e){
-//            return new ResponseEntity<>("Employee delete exception",HttpStatus.EXPECTATION_FAILED);
-//        }
-//    }
-//
+
 
 
 //    @PostMapping("/resetRemainingDayOff/{employeeId}")

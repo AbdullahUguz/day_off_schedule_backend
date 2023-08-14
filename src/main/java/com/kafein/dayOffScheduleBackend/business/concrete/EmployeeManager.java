@@ -40,12 +40,15 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public List<Employee> getAll() {
-        return this.employeeRepository.findAllByOrderByIdAsc();
+       // return this.employeeRepository.findAllByOrderByIdAsc();
+        return this.employeeRepository.findAllByIsVisibleTrueOrderByIdAsc();
     }
 
     @Override
     public void deleteEmployeeById(long employeeId) {
-        this.employeeRepository.deleteById(employeeId);
+        Employee employeCntrl = this.employeeRepository.findById(employeeId).get();
+        employeCntrl.setIsVisible(false);
+        this.employeeRepository.save(employeCntrl);
     }
 
     @Override

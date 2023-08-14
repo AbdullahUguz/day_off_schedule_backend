@@ -26,10 +26,8 @@ public class DayOff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Value("${custom.dayOff.initialValue}")
     private Integer initialDayOff;
 
-    @Value("${custom.dayOff.remainingDayOffValue}")
     private Float remainingDayOff;
 
     @OneToMany(mappedBy = "dayOff",cascade = CascadeType.ALL)
