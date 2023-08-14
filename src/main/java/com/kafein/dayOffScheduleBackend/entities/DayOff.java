@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,11 @@ public class DayOff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer dayOff;
+    @Value("${custom.dayOff.initialValue}")
+    private Integer initialDayOff;
 
+    @Value("${custom.dayOff.remainingDayOffValue}")
     private Float remainingDayOff;
-
-//    @OneToOne(mappedBy = "dayOff")
-//    private Employee employee;
 
     @OneToMany(mappedBy = "dayOff",cascade = CascadeType.ALL)
     private List<DayOffDetail> dayOffDetailList = new ArrayList<>();

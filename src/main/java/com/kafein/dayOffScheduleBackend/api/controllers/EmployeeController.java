@@ -31,15 +31,38 @@ public class EmployeeController {
     @PostMapping("/create")
     private ResponseEntity<String> create(@RequestBody EmployeeRequestDto employeeRequestDto){
         try{
-            Employee newEmployee = employeeRequestDto.getEmployee();
-            newEmployee.setVisible(true);
+            DayOff dayOff = new DayOff();
             Department department = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
-            newEmployee.setDayOff(new DayOff());
+            Employee newEmployee = employeeRequestDto.getEmployee();
+
+            newEmployee.setVisible(true);
+            dayOff.setInitialDayOff(20);
+            dayOff.setRemainingDayOff(20f);
+            newEmployee.setDayOff(dayOff);
+            System.out.println("department :"+department);
             newEmployee.setDepartment(department);
 
             this.employeeService.create(newEmployee);
 
             return new ResponseEntity<>("Employee created",HttpStatus.CREATED);
+        }catch (Exception e){
+            String errorMessage;
+            if (e.getMessage().contains("email")) {
+                errorMessage = "Email already exists";
+                return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+            } else {
+                errorMessage = "An error occurred while creating employee";
+                return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
+    @PutMapping("/update/{employeeId}")
+    private ResponseEntity<String> update(@PathVariable int employeeId ,@RequestBody EmployeeRequestDto employeeRequestDto){
+        try {
+            Department departmentCntrl = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
+            this.employeeService.updateEmployee(Long.valueOf(employeeId),employeeRequestDto.getEmployee(),departmentCntrl);
+            return new ResponseEntity<>("Employee updated",HttpStatus.OK);
         }catch (Exception e){
             String errorMessage;
             if (e.getMessage().contains("email")) {
@@ -74,18 +97,6 @@ public class EmployeeController {
 //        }
 //    }
 
-//    @PostMapping("/isEmailExist")
-//    private ResponseEntity<String> isEmailExist(@RequestBody EmployeeDto employeeDto){
-//        try{
-//            if(this.employeeService.isEmailExist(employeeDto.getEmail())){
-//                return new ResponseEntity<>("true", HttpStatus.OK); // email exist
-//            }else{
-//                return new ResponseEntity<>("false", HttpStatus.OK); // email didnt exist
-//            }
-//        }catch (Exception e){
-//            return new ResponseEntity<>("Email control exception: "+e, HttpStatus.EXPECTATION_FAILED);
-//        }
-//    }
 
 //    @DeleteMapping("/delete/{employeeId}")
 //    private ResponseEntity<String> delete(@PathVariable int employeeId){
@@ -97,15 +108,7 @@ public class EmployeeController {
 //        }
 //    }
 //
-//    @PutMapping("/update/{employeeId}")
-//    private ResponseEntity<String> update(@PathVariable int employeeId ,@RequestBody Employee employee){
-//        try {
-//            this.employeeService.updateEmployee(Long.valueOf(employeeId),employee);
-//            return new ResponseEntity<>("Employee updated",HttpStatus.OK);
-//        }catch (Exception e){
-//            return new ResponseEntity<>("Employee update exception: "+e,HttpStatus.EXPECTATION_FAILED);
-//        }
-//    }
+
 
 //    @PostMapping("/resetRemainingDayOff/{employeeId}")
 //    private ResponseEntity<String> resetRemaningDayOff(@PathVariable int employeeId){

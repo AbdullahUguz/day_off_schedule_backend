@@ -1,13 +1,13 @@
 package com.kafein.dayOffScheduleBackend.business.concrete;
 
 import com.kafein.dayOffScheduleBackend.business.abstracts.EmployeeService;
+import com.kafein.dayOffScheduleBackend.entities.Department;
 import com.kafein.dayOffScheduleBackend.entities.Employee;
 import com.kafein.dayOffScheduleBackend.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeManager implements EmployeeService {
@@ -40,23 +40,7 @@ public class EmployeeManager implements EmployeeService {
 
     @Override
     public List<Employee> getAll() {
-        return this.employeeRepository.findAll();
-    }
-
-    @Override
-    public boolean isEmailExist(String email) {
-        try{
-            Employee employee = this.employeeRepository.findByEmail(email);
-            if(employee == null){
-                return false;
-            }else {
-                return true;
-            }
-
-        }catch (Exception e){
-            new Throwable("email control exception : "+e);
-        }
-        return false;
+        return this.employeeRepository.findAllByOrderByIdAsc();
     }
 
     @Override
@@ -64,25 +48,25 @@ public class EmployeeManager implements EmployeeService {
         this.employeeRepository.deleteById(employeeId);
     }
 
+    @Override
+    public void updateEmployee(long employeeId, Employee employee, Department department) throws Exception {
+        try {
+            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
 
+            if(employeeCntrl.getDepartment().getId() != department.getId()){
+                employeeCntrl.setDepartment(employee.getDepartment());
+            }
 
-//    @Override
-//    public void updateEmployee(long employeeId,Employee employee) {
-//        try {
-//            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
-//
-//            employeeCntrl.setName(employee.getName());
-//            employeeCntrl.setLastName(employee.getLastName());
-//            employeeCntrl.setDepartment(employee.getDepartment());
-//            employeeCntrl.setEmail(employee.getEmail());
-//            employeeCntrl.setDayOff(employee.getDayOff());
-//
-//            this.employeeRepository.save(employeeCntrl);
-//        }catch (Exception e){
-//            new Throwable("employee update exception : "+e);
-//        }
-//    }
-//
+            employeeCntrl.setName(employee.getName());
+            employeeCntrl.setLastName(employee.getLastName());
+            employeeCntrl.setEmail(employee.getEmail());
+            employeeCntrl.setDepartment(department);
+            this.employeeRepository.save(employeeCntrl);
+        }catch (Exception e){
+             throw new Exception(e);
+        }
+    }
+
 //    @Override
 //    public void resetResetRemainingDayOff(long employeeId) {
 //        try {

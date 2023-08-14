@@ -23,15 +23,15 @@ public class DayOffController {
     }
 
 
-//    @GetMapping("/getDayOff/{employeeId}")
-//    private List<DayOff> getAll(@PathVariable int employeeId){
-//        try{
-//            System.out.println("employeeId : "+employeeId);
-//            return  this.dayOffService.getDaysOffByEmployeeId(Long.valueOf(employeeId));
-//        }catch (Exception e){
-//            return null;
-//        }
-//    }
+    @GetMapping("/getDayOff/{employeeId}")
+    private DayOff getAll(@PathVariable int employeeId){
+        try{
+            System.out.println("employeeId : "+employeeId);
+            return  this.dayOffService.getDayOffById(Long.valueOf(employeeId));
+        }catch (Exception e){
+            return null;
+        }
+    }
 
     @PostMapping("/addDayOffDetail/{dayOffId}")
     private ResponseEntity<DayOff> create(@PathVariable int dayOffId,@RequestBody DayOffDetail dayOffDetail){
