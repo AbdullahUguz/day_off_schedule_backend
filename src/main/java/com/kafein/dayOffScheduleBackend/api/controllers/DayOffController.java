@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/daysOff")
@@ -26,7 +25,6 @@ public class DayOffController {
     @GetMapping("/getDayOff/{employeeId}")
     private DayOff getAll(@PathVariable int employeeId){
         try{
-            System.out.println("employeeId : "+employeeId);
             return  this.dayOffService.getDayOffById(Long.valueOf(employeeId));
         }catch (Exception e){
             return null;

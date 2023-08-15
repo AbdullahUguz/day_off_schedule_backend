@@ -15,8 +15,8 @@ public class DepartmentManager implements DepartmentService {
     private DepartmentRepository departmentRepository;
 
     @Autowired
-    public DepartmentManager(DepartmentRepository departmentRepository){
-        this.departmentRepository=departmentRepository;
+    public DepartmentManager(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
     }
 
     @Override

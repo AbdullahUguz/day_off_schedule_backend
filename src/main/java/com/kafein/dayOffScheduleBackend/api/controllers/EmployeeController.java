@@ -3,7 +3,6 @@ package com.kafein.dayOffScheduleBackend.api.controllers;
 import com.kafein.dayOffScheduleBackend.business.abstracts.DepartmentService;
 import com.kafein.dayOffScheduleBackend.business.abstracts.EmployeeService;
 import com.kafein.dayOffScheduleBackend.dto.EmployeeRequestDto;
-import com.kafein.dayOffScheduleBackend.entities.DayOff;
 import com.kafein.dayOffScheduleBackend.entities.Department;
 import com.kafein.dayOffScheduleBackend.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,37 +12,27 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/employees")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmployeeController {
     private EmployeeService employeeService;
     private DepartmentService departmentService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService,DepartmentService departmentService){
-        this.employeeService=employeeService;
-        this.departmentService=departmentService;
+    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
+        this.employeeService = employeeService;
+        this.departmentService = departmentService;
     }
 
     @PostMapping("/create")
-    private ResponseEntity<String> create(@RequestBody EmployeeRequestDto employeeRequestDto){
-        try{
-            DayOff dayOff = new DayOff();
-            Department department = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
-            Employee newEmployee = employeeRequestDto.getEmployee();
+    private ResponseEntity<String> create(@RequestBody EmployeeRequestDto employeeRequestDto) {
+        try {
+            this.employeeService.create(employeeRequestDto.getEmployee(), Long.valueOf(employeeRequestDto.getDepartmentId()));
 
-            dayOff.setInitialDayOff(20);
-            dayOff.setRemainingDayOff(20f);
-            newEmployee.setDayOff(dayOff);
-            System.out.println("department :"+department);
-            newEmployee.setDepartment(department);
+            return new ResponseEntity<>("Employee created", HttpStatus.CREATED);
 
-            this.employeeService.create(newEmployee);
-
-            return new ResponseEntity<>("Employee created",HttpStatus.CREATED);
-        }catch (Exception e){
+        } catch (Exception e) {
             String errorMessage;
             if (e.getMessage().contains("email") && e.getMessage().contains("already exists")) {
                 errorMessage = "Email already exists";
@@ -56,12 +45,11 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{employeeId}")
-    private ResponseEntity<String> update(@PathVariable int employeeId ,@RequestBody EmployeeRequestDto employeeRequestDto){
+    private ResponseEntity<String> update(@PathVariable int employeeId, @RequestBody EmployeeRequestDto employeeRequestDto) {
         try {
-            Department departmentCntrl = this.departmentService.getById(Long.valueOf(employeeRequestDto.getDepartmentId()));
-            this.employeeService.updateEmployee(Long.valueOf(employeeId),employeeRequestDto.getEmployee(),departmentCntrl);
-            return new ResponseEntity<>("Employee updated",HttpStatus.OK);
-        }catch (Exception e){
+            this.employeeService.updateEmployee(Long.valueOf(employeeId), employeeRequestDto.getEmployee(), employeeRequestDto.getDepartmentId());
+            return new ResponseEntity<>("Employee updated", HttpStatus.OK);
+        } catch (Exception e) {
             String errorMessage;
             if (e.getMessage().contains("email") && e.getMessage().contains("already exists")) {
                 errorMessage = "Email already exists";
@@ -74,24 +62,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/getAll")
-    private List<Employee> getAll(){
-        try{
-            return  this.employeeService.getAll();
-        }catch (Exception e){
+    private List<Employee> getAll() {
+        try {
+            return this.employeeService.getAll();
+        } catch (Exception e) {
             return null;
         }
     }
 
     @DeleteMapping("/delete/{employeeId}")
-    private ResponseEntity<String> delete(@PathVariable int employeeId){
-        try{
+    private ResponseEntity<String> delete(@PathVariable int employeeId) {
+        try {
             this.employeeService.deleteEmployeeById(Long.valueOf(employeeId));
-            return new ResponseEntity<>("Employee deleted",HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>("Employee delete exception",HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("Employee deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Employee delete exception", HttpStatus.EXPECTATION_FAILED);
         }
     }
-
 
 
 //    @PutMapping("/remainingDayOff/{employeeId}")
@@ -105,9 +92,6 @@ public class EmployeeController {
 //            return new ResponseEntity<>("Employee remining day off didnt update: "+e, HttpStatus.EXPECTATION_FAILED);
 //        }
 //    }
-
-
-
 
 
 //    @PostMapping("/resetRemainingDayOff/{employeeId}")
