@@ -26,6 +26,9 @@ public class DepartmentController {
         try{
             return new ResponseEntity<>(this.departmentService.create(department), HttpStatus.CREATED);
         }catch (Exception e){
+            if(e.getMessage().contains("already exists") && e.getMessage().contains("name")){
+                return new ResponseEntity<>(null,HttpStatus.CONFLICT);
+            }
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }

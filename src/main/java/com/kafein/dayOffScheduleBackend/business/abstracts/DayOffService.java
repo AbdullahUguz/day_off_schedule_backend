@@ -6,6 +6,8 @@ import com.kafein.dayOffScheduleBackend.entities.DayOffDetail;
 
 public interface DayOffService {
     DayOff getDayOffById(long employeeId);
+
     DayOff getById(long dayOffId);
+
     DayOff addDayOfDetail(long dayOffId, DayOffDetail dayOffDetail);
 }

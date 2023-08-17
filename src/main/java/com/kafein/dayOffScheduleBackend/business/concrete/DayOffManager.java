@@ -13,8 +13,8 @@ public class DayOffManager implements DayOffService {
     private DayOffRepository dayOffRepository;
 
     @Autowired
-    public DayOffManager(DayOffRepository dayOffRepository){
-        this.dayOffRepository=dayOffRepository;
+    public DayOffManager(DayOffRepository dayOffRepository) {
+        this.dayOffRepository = dayOffRepository;
     }
 
 
