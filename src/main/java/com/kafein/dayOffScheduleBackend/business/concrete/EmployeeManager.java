@@ -47,20 +47,6 @@ public class EmployeeManager implements EmployeeService {
         }
     }
 
-//    @Override
-//    public void updateRemainingDayOff(long employeeId, int usedDayOff) {
-//
-//        try {
-//            Optional<Employee> employee= this.employeeRepository.findById(employeeId);
-//            employee.get().setRemainingDayOff(employee.get().getRemainingDayOff() - usedDayOff);
-//
-//            this.employeeRepository.save(employee.get());
-//
-//        }catch (Exception e){
-//            new Throwable("update remining dayy off exceptions");
-//        }
-//    }
-
     @Override
     public List<Employee> getAll() {
         return this.employeeRepository.findAllByIsVisibleTrueOrderByIdAsc();
@@ -93,16 +79,4 @@ public class EmployeeManager implements EmployeeService {
         }
     }
 
-//    @Override
-//    public void resetResetRemainingDayOff(long employeeId) {
-//        try {
-//
-//            Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
-//            employeeCntrl.setRemainingDayOff(employeeCntrl.getDayOff());
-//            this.employeeRepository.save(employeeCntrl);
-//
-//        }catch (Exception e){
-//            new Throwable("reset remaining day off exception : "+e);
-//        }
-//    }
 }

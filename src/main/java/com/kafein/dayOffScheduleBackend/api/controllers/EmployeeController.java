@@ -3,7 +3,6 @@ package com.kafein.dayOffScheduleBackend.api.controllers;
 import com.kafein.dayOffScheduleBackend.business.abstracts.DepartmentService;
 import com.kafein.dayOffScheduleBackend.business.abstracts.EmployeeService;
 import com.kafein.dayOffScheduleBackend.dto.EmployeeRequestDto;
-import com.kafein.dayOffScheduleBackend.entities.Department;
 import com.kafein.dayOffScheduleBackend.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,28 +79,4 @@ public class EmployeeController {
         }
     }
 
-
-//    @PutMapping("/remainingDayOff/{employeeId}")
-//    private ResponseEntity<String> updateRemainingDayOff(@PathVariable int employeeId, @RequestBody EmployeeDto employeeDto){
-//        try{
-//
-//            this.employeeService.updateRemainingDayOff( Long.valueOf(employeeId),employeeDto.getUsedDayOff());
-//
-//            return new ResponseEntity<>("Employee remining day off updated successfully .", HttpStatus.OK);
-//        }catch (Exception e){
-//            return new ResponseEntity<>("Employee remining day off didnt update: "+e, HttpStatus.EXPECTATION_FAILED);
-//        }
-//    }
-
-
-//    @PostMapping("/resetRemainingDayOff/{employeeId}")
-//    private ResponseEntity<String> resetRemaningDayOff(@PathVariable int employeeId){
-//        try{
-//            this.employeeService.resetResetRemainingDayOff(Long.valueOf(employeeId));
-//
-//            return new ResponseEntity<>("Employee updated",HttpStatus.OK);
-//        }catch (Exception e){
-//            return new ResponseEntity<>("Employee update exception: "+e,HttpStatus.EXPECTATION_FAILED);
-//        }
-//    }
 }
