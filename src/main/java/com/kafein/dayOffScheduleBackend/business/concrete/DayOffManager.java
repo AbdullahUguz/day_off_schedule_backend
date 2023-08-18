@@ -31,6 +31,7 @@ public class DayOffManager implements DayOffService {
     @Override
     public DayOff addDayOfDetail(long dayOffId, DayOffDetail dayOffDetail) {
         DayOff dayOff = this.getById(dayOffId);
+        dayOff.setRemainingDayOff(dayOff.getRemainingDayOff()-dayOffDetail.getUsedDayOff());
         dayOffDetail.setDayOff(dayOff);
         dayOff.getDayOffDetailList().add(dayOffDetail);
         return this.dayOffRepository.save(dayOff);
