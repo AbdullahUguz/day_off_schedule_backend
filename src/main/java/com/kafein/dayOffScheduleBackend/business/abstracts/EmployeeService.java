@@ -15,6 +15,5 @@ public interface EmployeeService {
     void deleteEmployeeById(long employeeId);
 
     void updateEmployee(long emlpoyeeId, Employee employee, long departmentId) throws Exception;
-//    void resetResetRemainingDayOff(long employeeId);
 
 }

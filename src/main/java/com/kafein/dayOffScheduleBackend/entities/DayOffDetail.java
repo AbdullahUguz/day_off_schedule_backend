@@ -2,12 +2,16 @@ package com.kafein.dayOffScheduleBackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.kafein.dayOffScheduleBackend.config.dateConfig.CustomLocalDateTimeDeserializer;
+import com.kafein.dayOffScheduleBackend.config.dateConfig.CustomLocalDateTimeSerializer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -22,9 +26,13 @@ public class DayOffDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date startDate;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    private LocalDateTime startDate;
 
-    private Date endDate;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    private LocalDateTime endDate;
 
     private String explanation;
 

@@ -46,9 +46,9 @@ public class DayOffController {
 
             this.dayOffService.resetRemainingDayOff(Long.valueOf(dayOffId));
 
-            return new ResponseEntity<>("Employee remining day off updated successfully .", HttpStatus.OK);
+            return new ResponseEntity<>("Employee remaining day off updated successfully .", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Employee remining day off didnt update: " + e, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("Employee remaining day off didnt update: " + e, HttpStatus.EXPECTATION_FAILED);
         }
     }
 
