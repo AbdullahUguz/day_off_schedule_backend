@@ -1,4 +1,4 @@
-# Day Off Schedule
+# Day Off Schedule Backend
 
 Day Off Schedule is a software project developed to manage and monitor employees' leaves. It is built using the Spring Boot framework and is supported by a PostgreSQL database and Docker.
 
