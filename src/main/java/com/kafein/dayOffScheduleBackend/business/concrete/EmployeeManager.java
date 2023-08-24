@@ -24,14 +24,14 @@ public class EmployeeManager implements EmployeeService {
     private float remainingDayOff;
 
     @Autowired
-    public EmployeeManager(EmployeeRepository employeeRepository,DepartmentRepository departmentRepository){
-        this.employeeRepository=employeeRepository;
-        this.departmentRepository=departmentRepository;
+    public EmployeeManager(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
-    public void create(Employee employee,long departmenId) throws Exception{
-        try{
+    public void create(Employee employee, long departmenId) throws Exception {
+        try {
             DayOff dayOff = new DayOff();
             Department department = this.departmentRepository.findById(departmenId).get();
 
@@ -41,7 +41,7 @@ public class EmployeeManager implements EmployeeService {
             employee.setDepartment(department);
             this.employeeRepository.save(employee);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e);
 
         }
@@ -65,7 +65,7 @@ public class EmployeeManager implements EmployeeService {
             Department departmentCntrl = this.departmentRepository.findById(departmentId).get();
             Employee employeeCntrl = this.employeeRepository.findById(employeeId).get();
 
-            if(employeeCntrl.getDepartment().getId() != departmentId){
+            if (employeeCntrl.getDepartment().getId() != departmentId) {
                 employeeCntrl.setDepartment(employee.getDepartment());
             }
 
@@ -74,8 +74,8 @@ public class EmployeeManager implements EmployeeService {
             employeeCntrl.setEmail(employee.getEmail());
             employeeCntrl.setDepartment(departmentCntrl);
             this.employeeRepository.save(employeeCntrl);
-        }catch (Exception e){
-             throw new Exception(e);
+        } catch (Exception e) {
+            throw new Exception(e);
         }
     }
 

@@ -11,34 +11,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DepartmentController {
 
     private DepartmentService departmentService;
 
     @Autowired
-    public DepartmentController(DepartmentService departmentService){
-        this.departmentService=departmentService;
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 
     @PostMapping("/create")
-    private ResponseEntity<Department> create(@RequestBody Department department){
-        try{
+    private ResponseEntity<Department> create(@RequestBody Department department) {
+        try {
             return new ResponseEntity<>(this.departmentService.create(department), HttpStatus.CREATED);
-        }catch (Exception e){
-            if(e.getMessage().contains("already exists") && e.getMessage().contains("name")){
-                return new ResponseEntity<>(null,HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            if (e.getMessage().contains("already exists") && e.getMessage().contains("name")) {
+                return new ResponseEntity<>(null, HttpStatus.CONFLICT);
             }
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @GetMapping("/getAll")
-    private List<Department>  getAll(){
+    private List<Department> getAll() {
         try {
             return this.departmentService.getAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
- }
+}

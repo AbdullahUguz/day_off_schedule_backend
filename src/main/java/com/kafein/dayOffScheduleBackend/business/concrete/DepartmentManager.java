@@ -24,10 +24,6 @@ public class DepartmentManager implements DepartmentService {
         return this.departmentRepository.save(department);
     }
 
-    @Override
-    public Department getById(long departmentId) {
-        return this.departmentRepository.findById(departmentId).get();
-    }
 
     @Override
     public List<Department> getAll() {

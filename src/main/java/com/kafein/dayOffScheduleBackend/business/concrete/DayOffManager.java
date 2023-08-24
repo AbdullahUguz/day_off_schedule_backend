@@ -8,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Service
 public class DayOffManager implements DayOffService {
     private DayOffRepository dayOffRepository;
@@ -51,26 +47,10 @@ public class DayOffManager implements DayOffService {
     @Override
     public DayOff addDayOfDetail(long dayOffId, DayOffDetail dayOffDetail) {
         DayOff dayOff = this.getById(dayOffId);
-
-//        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        LocalDate localStartDate = LocalDate.parse(inputDate, inputFormatter);
-//        LocalDate localEndDate = LocalDate.parse(inputDate, inputFormatter);
-//
-//        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
-//        String formattedDate = localStartDate.atStartOfDay().format(outputFormatter);
-//
-//        dayOffDetail.setStartDate(localStartDate.atStartOfDay().format(outputFormatter));
-//        dayOffDetail.setEndDate(localEndDate.atStartOfDay().format(outputFormatter));
-
-//        dayOffDetail.setStartDate(localStartDate.atStartOfDay().format(outputFormatter));
-//        dayOffDetail.setEndDate(localEndDate.atStartOfDay().format(outputFormatter));
-
-
         dayOff.setRemainingDayOff(dayOff.getRemainingDayOff() - dayOffDetail.getUsedDayOff());
         dayOffDetail.setDayOff(dayOff);
         dayOff.getDayOffDetailList().add(dayOffDetail);
 
         return this.dayOffRepository.save(dayOff);
-
     }
 }
